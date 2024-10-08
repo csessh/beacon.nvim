@@ -152,17 +152,19 @@ function M.setup(config)
     end,
   })
 
-  vim.api.nvim_create_autocmd(M.config.cursor_events, {
-    pattern = '*',
-    group = beacon_group,
-    desc = 'Highlight cursor moves',
-    ---@param event beacon.AutocmdEvent
-    callback = function(event)
-      vim.schedule(function()
-        cursor_moved(event)
-      end)
-    end,
-  })
+  if #M.config.cursor_events > 0 then
+    vim.api.nvim_create_autocmd(M.config.cursor_events, {
+      pattern = '*',
+      group = beacon_group,
+      desc = 'Highlight cursor moves',
+      ---@param event beacon.AutocmdEvent
+      callback = function(event)
+        vim.schedule(function()
+          cursor_moved(event)
+        end)
+      end,
+    })
+  end
 end
 
 return M
